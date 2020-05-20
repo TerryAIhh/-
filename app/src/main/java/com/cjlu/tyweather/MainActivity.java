@@ -1,74 +1,57 @@
 package com.cjlu.tyweather;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
+import com.cjlu.tyweather.acticitiy.CityManagerActivity;
 import com.cjlu.tyweather.acticitiy.MoreActivity;
 import com.cjlu.tyweather.adapter.MyPagerAdapter;
-import com.cjlu.tyweather.acticitiy.CityManagerActivity;
+import com.cjlu.tyweather.databinding.ActivityMainBinding;
 import com.cjlu.tyweather.db.DbManager;
 import com.cjlu.tyweather.fragment.CityWeatherFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.viewpager2.widget.ViewPager2.*;
+import static androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView menuIv;
-    LinearLayout pointLayout;
-    ViewPager2 mainVp;
-    RelativeLayout mainLayout;
-    // ViewPager 的数据源
-    List<Fragment> fragmentList;
-    // 表示城市集合
-    List<String> cityList;
-    // 指示器集合
-    List<ImageView> pointList;
-    private MyPagerAdapter adapter;
+    ActivityMainBinding binding;
+    ActionBar supportActionBar; // 应用的标题栏
+    List<Fragment> fragmentList; // 页面的数据源，fragment的列表
+    List<String> cityList; // 已有城市的列表
+    List<ImageView> pointList; // 底部指示器
+    private MyPagerAdapter adapter; // ViewPager2 适配器
 
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // 初始化控件
-        menuIv = findViewById(R.id.main_iv_menu);
-        pointLayout = findViewById(R.id.main_layout_point);
-        mainVp = findViewById(R.id.main_vp);
-        mainLayout = findViewById(R.id.main_layout);
-        // 添加点击事件
-        menuIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupMenu(menuIv);
-            }
-        });
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        // 初始化ActionBar
+        supportActionBar = getSupportActionBar();
         // 初始化背景
         changeBg();
         // 数据的初始化
         fragmentList = new ArrayList<>();
         cityList = DbManager.queryAllCityName();
         pointList = new ArrayList<>();
-        // 暂未添加任何城市，默认温州
+        // 暂未添加任何城市，默认北京
         if (cityList.size() == 0) {
-            // TODO 后续可以添加定位当前城市
-            cityList.add("温州");
+            cityList.add("北京");
         }
-        /* 搜索添加城市跳转到此页面 */
+        // 搜索添加城市跳转到此页面
         Intent intent = getIntent();
         String city = intent.getStringExtra("city");
         if (!cityList.contains(city) && !TextUtils.isEmpty(city)) {
@@ -77,14 +60,38 @@ public class MainActivity extends AppCompatActivity {
         // 初始化 ViewPager
         initViewPager();
         adapter = new MyPagerAdapter(this, fragmentList);
-        mainVp.setAdapter(adapter);
+        binding.mainVp.setAdapter(adapter);
         // 初始化小圆点指示器
         initPoints();
         // 默认加载最后的一个城市
-        mainVp.setCurrentItem(fragmentList.size() - 1);
+        binding.mainVp.setCurrentItem(fragmentList.size() - 1);
         // 设置滑动页面监听器
         setPagerListener();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        Intent intent = new Intent();
+        switch (item.getItemId()) {
+            case R.id.city_manager:
+                intent.setClass(MainActivity.this, CityManagerActivity.class);
+                break;
+            case R.id.more_settings:
+                intent.setClass(MainActivity.this, MoreActivity.class);
+                break;
+        }
+        startActivity(intent);
+        return true;
+    }
+
 
     // 更新背景图
     public void changeBg() {
@@ -92,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
         int bg_num = bg_pref.getInt("bg", 2);
         switch (bg_num) {
             case 0:
-                mainLayout.setBackgroundResource(R.color.colorAccent);
+                binding.mainLayout.setBackgroundResource(R.color.colorAccent);
                 break;
             case 1:
-                mainLayout.setBackgroundResource(R.color.pink);
+                binding.mainLayout.setBackgroundResource(R.color.pink);
                 break;
             case 2:
-                mainLayout.setBackgroundResource(R.color.gray_bg);
+                binding.mainLayout.setBackgroundResource(R.color.gray_bg);
                 break;
         }
     }
@@ -107,17 +114,18 @@ public class MainActivity extends AppCompatActivity {
      * 设置滑动页面监听器
      */
     private void setPagerListener() {
-        mainVp.registerOnPageChangeCallback(new OnPageChangeCallback() {
+        binding.mainVp.registerOnPageChangeCallback(new OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
+                supportActionBar.setTitle(cityList.get(position));
                 for (int i = 0; i < pointList.size(); i++) {
-                    pointList.get(i).setImageResource(R.drawable.ic_small_gray);
+                    pointList.get(i).setImageResource(R.drawable.ic_small_white);
                 }
-                pointList.get(position).setImageResource(R.drawable.ic_small_white);
+                pointList.get(position).setImageResource(R.drawable.ic_small_gray);
             }
 
             @Override
@@ -132,51 +140,14 @@ public class MainActivity extends AppCompatActivity {
     private void initPoints() {
         for (int i = 0; i < fragmentList.size(); i++) {
             ImageView pointIv = new ImageView(this);
-            pointIv.setImageResource(R.drawable.ic_small_gray);
+            pointIv.setImageResource(R.drawable.ic_small_white);
             pointIv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) pointIv.getLayoutParams();
             lp.setMargins(0, 0, 20, 0);
             pointList.add(pointIv);
-            pointLayout.addView(pointIv);
+            binding.mainLayoutPoint.addView(pointIv);
         }
-        pointList.get(pointList.size() - 1).setImageResource(R.drawable.ic_small_white);
-    }
-
-    /**
-     * 初始化菜单按钮
-     * 并跳转到相对应 Activity
-     */
-    private void showPopupMenu(View view) {
-        // View当前PopupMenu显示的相对View的位置
-        PopupMenu popupMenu = new PopupMenu(this, view);
-        // menu布局
-        popupMenu.getMenuInflater().inflate(R.menu.main, popupMenu.getMenu());
-        // menu的item点击事件
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent();
-                switch (item.getItemId()) {
-                    case R.id.city_manager:
-                        intent.setClass(MainActivity.this, CityManagerActivity.class);
-                        break;
-                    case R.id.more_settings:
-                        intent.setClass(MainActivity.this, MoreActivity.class);
-                        break;
-                }
-                startActivity(intent);
-                return false;
-            }
-        });
-        // PopupMenu关闭事件
-        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
-            @Override
-            public void onDismiss(PopupMenu menu) {
-            }
-        });
-
-        popupMenu.show();
+        pointList.get(pointList.size() - 1).setImageResource(R.drawable.ic_small_gray);
     }
 
     private void initViewPager() {
@@ -207,8 +178,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         // 小圆点也要更新
         pointList.clear();
-        pointLayout.removeAllViews();   // 将布局中所有元素全部移除
+        binding.mainLayoutPoint.removeAllViews();   // 将布局中所有元素全部移除
         initPoints();
-        mainVp.setCurrentItem(fragmentList.size() - 1);
+        binding.mainVp.setCurrentItem(fragmentList.size() - 1);
     }
 }

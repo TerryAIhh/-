@@ -1,86 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frag_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_bg"
-    tools:context=".fragment.CityWeatherFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frag_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        tools:context=".fragment.CityWeatherFragment">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/frag_bg"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/frag_tv_city"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="温州"
-                android:textColor="@color/black"
-                android:textSize="28sp" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/frag_layout_center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/frag_tv_current_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/frag_tv_city"
+                android:layout_marginTop="60dp"
                 android:text="3℃"
-                android:textColor="@color/black"
-                android:textSize="70sp" />
+                android:textColor="@color/textWhite"
+                android:textSize="66sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/frag_tv_weather"
                 style="@style/TodayText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/frag_tv_current_temp"
-                android:text="晴" />
+                android:layout_marginTop="8dp"
+                android:text="晴"
+                app:layout_constraintEnd_toEndOf="@+id/frag_tv_current_temp"
+                app:layout_constraintStart_toStartOf="@+id/frag_tv_current_temp"
+                app:layout_constraintTop_toBottomOf="@+id/frag_tv_current_temp" />
 
             <TextView
                 android:id="@+id/frag_tv_wind"
                 style="@style/TodayText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/frag_tv_current_temp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/frag_tv_weather"
-                android:text="东南风" />
+                android:text="东南风"
+                app:layout_constraintEnd_toEndOf="@+id/frag_tv_weather"
+                app:layout_constraintStart_toStartOf="@+id/frag_tv_weather"
+                app:layout_constraintTop_toBottomOf="@+id/frag_tv_weather" />
 
             <TextView
                 android:id="@+id/frag_tv_temp_range"
                 style="@style/TodayText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/frag_tv_weather"
-                android:text="18~24℃" />
+                android:layout_marginTop="8dp"
+                android:text="18~24℃"
+                app:layout_constraintEnd_toEndOf="@+id/frag_tv_wind"
+                app:layout_constraintStart_toStartOf="@+id/frag_tv_wind"
+                app:layout_constraintTop_toBottomOf="@+id/frag_tv_wind" />
 
-            <TextView
-                android:id="@+id/frag_tv_date"
-                style="@style/TodayText"
-                android:layout_below="@id/frag_tv_temp_range"
-                android:text="2020-04-23" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/frag_iv_today"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentRight="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_sun" />
-        </RelativeLayout>
-
-        <!-- 未来三天天气 -->
         <LinearLayout
             android:id="@+id/frag_layout_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/frag_bg"
             android:orientation="vertical"
-            android:padding="10dp" />
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/frag_layout_index"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/frag_layout_index"
@@ -89,7 +95,10 @@
             android:layout_margin="5dp"
             android:background="@drawable/frag_bg"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -145,7 +154,6 @@
             </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
 
-
-</ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

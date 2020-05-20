@@ -1,122 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_bg"
-    tools:context=".acticitiy.MoreActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:id="@+id/more_layout_top"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white_bg">
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        tools:context=".acticitiy.MoreActivity">
 
-        <ImageView
-            android:id="@+id/more_iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_back" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="更多设置"
+            android:id="@+id/more_tv_change_bg"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/ic_pic"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="更改背景图"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="88dp" />
 
-    </RelativeLayout>
+        <RadioGroup
+            android:id="@+id/more_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-    <TextView
-        android:id="@+id/more_tv_change_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/more_layout_top"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/frag_bg"
-        android:drawableLeft="@drawable/ic_pic"
-        android:drawablePadding="20dp"
-        android:padding="10dp"
-        android:text="更改背景图"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+            <RadioButton
+                android:id="@+id/more_rb_green"
+                style="@style/RadioButtonOfBg"
+                android:background="@color/colorAccent"
+                android:text="护眼绿"
+                android:textColor="@color/black" />
 
-    <RadioGroup
-        android:id="@+id/more_rg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/more_tv_change_bg"
-        android:orientation="horizontal"
-        android:visibility="gone">
+            <RadioButton
+                android:id="@+id/more_rb_pink"
+                style="@style/RadioButtonOfBg"
+                android:background="@color/pink"
+                android:text="少女粉"
+                android:textColor="@color/black" />
 
-        <RadioButton
-            android:id="@+id/more_rb_green"
-            style="@style/RadioButtonOfBg"
-            android:background="@color/colorAccent"
-            android:text="护眼绿"
-            android:textColor="@color/black" />
-
-        <RadioButton
-            android:id="@+id/more_rb_pink"
-            style="@style/RadioButtonOfBg"
-            android:background="@color/pink"
-            android:text="少女粉"
-            android:textColor="@color/black" />
-
-        <RadioButton
-            android:id="@+id/more_rb_gray"
-            style="@style/RadioButtonOfBg"
-            android:background="@color/gray_bg"
-            android:text="高贵灰"
-            android:textColor="@color/black" />
+            <RadioButton
+                android:id="@+id/more_rb_gray"
+                style="@style/RadioButtonOfBg"
+                android:background="@color/gray_bg"
+                android:text="高贵灰"
+                android:textColor="@color/black" />
 
 
-    </RadioGroup>
+        </RadioGroup>
 
-    <TextView
-        android:id="@+id/more_tv_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/more_rg"
-        android:layout_margin="5dp"
-        android:background="@drawable/frag_bg"
-        android:drawableLeft="@drawable/ic_version"
-        android:drawablePadding="20dp"
-        android:padding="10dp"
-        android:text="当前版本"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/more_tv_version"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/ic_version"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="当前版本"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="157dp" />
 
-    <TextView
-        android:id="@+id/more_tv_clear_cache"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/more_tv_version"
-        android:layout_margin="5dp"
-        android:background="@drawable/frag_bg"
-        android:drawableLeft="@drawable/ic_cache"
-        android:drawablePadding="20dp"
-        android:padding="10dp"
-        android:text="清除缓存"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/more_tv_clear_cache"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/ic_cache"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="清除缓存"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="217dp" />
 
-    <TextView
-        android:id="@+id/more_tv_share"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/more_tv_clear_cache"
-        android:layout_margin="5dp"
-        android:background="@drawable/frag_bg"
-        android:drawableLeft="@drawable/ic_share"
-        android:drawablePadding="20dp"
-        android:padding="10dp"
-        android:text="分享软件"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/more_tv_share"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/ic_share"
+            android:drawablePadding="20dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="分享软件"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="330dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

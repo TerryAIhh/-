@@ -8,84 +8,87 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.cjlu.tyweather.MainActivity;
 import com.cjlu.tyweather.R;
+import com.cjlu.tyweather.databinding.ActivityMoreBinding;
 import com.cjlu.tyweather.db.DbManager;
 
 public class MoreActivity extends AppCompatActivity implements View.OnClickListener {
-
-    ImageView backIv;
-    TextView changeBgTv, versionTv, cacheTv, shareTv;
-    RadioGroup radioGroup;
+    private ActivityMoreBinding binding;
     private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_more);
-        backIv = findViewById(R.id.more_iv_back);
-        changeBgTv = findViewById(R.id.more_tv_change_bg);
-        versionTv = findViewById(R.id.more_tv_version);
-        cacheTv = findViewById(R.id.more_tv_clear_cache);
-        shareTv = findViewById(R.id.more_tv_share);
-        radioGroup = findViewById(R.id.more_rg);
-        backIv.setOnClickListener(this);
-        changeBgTv.setOnClickListener(this);
-        versionTv.setOnClickListener(this);
-        cacheTv.setOnClickListener(this);
-        shareTv.setOnClickListener(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_more);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setHomeButtonEnabled(true);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
+        binding.moreTvChangeBg.setOnClickListener(this);
+        binding.moreTvVersion.setOnClickListener(this);
+        binding.moreTvClearCache.setOnClickListener(this);
+        binding.moreTvShare.setOnClickListener(this);
         setRGListener();
         pref = getSharedPreferences("bg_pref", MODE_PRIVATE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return true;
     }
 
     /**
      * 设置RadioGroup监听
      */
     private void setRGListener() {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // 获取默认的背景图
-                int bg = pref.getInt("bg", 0);
-                SharedPreferences.Editor editor = pref.edit();
-                Intent intent = new Intent(MoreActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                switch (checkedId) {
-                    case R.id.more_rb_green:
-                        if (bg == 0) {
-                            Toast.makeText(MoreActivity.this, "您当前已设置该背景", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        editor.putInt("bg", 0);
-                        editor.commit();
-                        break;
-                    case R.id.more_rb_pink:
-                        if (bg == 1) {
-                            Toast.makeText(MoreActivity.this, "您当前已设置该背景", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        editor.putInt("bg", 1);
-                        editor.commit();
-                        break;
-                    case R.id.more_rb_gray:
-                        if (bg == 2) {
-                            Toast.makeText(MoreActivity.this, "您当前已设置该背景", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        editor.putInt("bg", 2);
-                        editor.commit();
-                        break;
-                }
-                startActivity(intent);
+        binding.moreRg.setOnCheckedChangeListener((group, checkedId) -> {
+            // 获取默认的背景图
+            int bg = pref.getInt("bg", 0);
+            SharedPreferences.Editor editor = pref.edit();
+            Intent intent = new Intent(MoreActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            switch (checkedId) {
+                case R.id.more_rb_green:
+                    if (bg == 0) {
+                        Toast.makeText(MoreActivity.this, "您当前已设置该背景", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    editor.putInt("bg", 0);
+                    editor.commit();
+                    break;
+                case R.id.more_rb_pink:
+                    if (bg == 1) {
+                        Toast.makeText(MoreActivity.this, "您当前已设置该背景", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    editor.putInt("bg", 1);
+                    editor.commit();
+                    break;
+                case R.id.more_rb_gray:
+                    if (bg == 2) {
+                        Toast.makeText(MoreActivity.this, "您当前已设置该背景", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    editor.putInt("bg", 2);
+                    editor.commit();
+                    break;
             }
+            startActivity(intent);
         });
     }
 
@@ -93,14 +96,11 @@ public class MoreActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.more_iv_back:
-                finish();
-                break;
             case R.id.more_tv_change_bg:
-                if (radioGroup.getVisibility() == View.VISIBLE) {
-                    radioGroup.setVisibility(View.GONE);
+                if (binding.moreRg.getVisibility() == View.VISIBLE) {
+                    binding.moreRg.setVisibility(View.GONE);
                 } else {
-                    radioGroup.setVisibility(View.VISIBLE);
+                    binding.moreRg.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.more_tv_version:

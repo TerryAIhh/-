@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF707070</color>
-    <color name="colorPrimaryDark">#FF707070</color>
-    <color name="colorAccent">#03DAC5</color>
     <color name="white_bg">#FFFFFFFF</color>
+    <color name="black">#FF191919</color>
+    <color name="colorPrimary">#1D82FC</color>
+    <color name="colorPrimaryDark">#1662BD</color>
+    <color name="colorAccent">#DBDCE4</color>
+    <color name="cardViewBg">#FFFFFF</color>
+    <color name="fragmentBg">#F0F3F7</color>
+    <color name="textBlack">#000000</color>
+    <color name="textWhite">#FFFFFF</color>
+    <color name="textGray">#999999</color>
+    <color name="textRole">#888888</color>
+    <color name="textDeepGray">#333333</color>
+    <color name="white">#FFFFFF</color>
+    <color name="alpha">#00000000</color>
+    <color name="pink">#FFCCCC</color>
     <color name="gray_bg">#FFEDEDED</color>
     <color name="text">#FFD3D3D3</color>
-    <color name="black">#FF191919</color>
-    <color name="pink">#FFCCCC</color>
+    <color name="card_bg">#3399CC</color>
+    <color name="red">#FF6666</color>
+    <color name="purple">#CCCCFF</color>
 </resources>

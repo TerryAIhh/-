@@ -1,15 +1,17 @@
 package com.cjlu.tyweather.acticitiy;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.View;
-import android.widget.ImageView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -23,9 +25,7 @@ import com.cjlu.tyweather.db.DbManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityManagerActivity extends AppCompatActivity implements View.OnClickListener {
-
-    ImageView addIv, backIv;
+public class CityManagerActivity extends AppCompatActivity {
     SwipeMenuListView cityLv;
     List<DatabaseBean> mDatas;
     private CityManagerAdapter adapter;
@@ -34,13 +34,13 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_manager);
-        addIv = findViewById(R.id.city_iv_add);
-        backIv = findViewById(R.id.city_iv_back);
         cityLv = findViewById(R.id.city_lv);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setHomeButtonEnabled(true);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
         mDatas = new ArrayList<>();
-        // 添加点击事件监听
-        addIv.setOnClickListener(this);
-        backIv.setOnClickListener(this);
         // 设置适配器
         adapter = new CityManagerAdapter(this, mDatas);
         cityLv.setAdapter(adapter);
@@ -61,9 +61,13 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.city_iv_add:
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.city_manager:
                 int cityCount = DbManager.getCityCount();
                 if (cityCount < 5) {
                     Intent intent = new Intent(this, SearchCityActivity.class);
@@ -72,10 +76,15 @@ public class CityManagerActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(this, "存储城市已达上限，请删除后进行添加", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.city_iv_back:
-                finish();
-                break;
         }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.city_manager, menu);
+        return true;
     }
 
     private void initSwipeMenuListView() {
