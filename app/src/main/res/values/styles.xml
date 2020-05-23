@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:statusBarColor">@color/purple</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
@@ -27,14 +27,14 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">5dp</item>
         <item name="android:layout_margin">3dp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/textWhite</item>
         <item name="android:drawablePadding">10dp</item>
     </style>
 
     <style name="FutureThreeDaysText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/textWhite</item>
         <item name="android:textSize">16sp</item>
     </style>
 

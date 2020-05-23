@@ -7,9 +7,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
@@ -110,24 +107,19 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
         String[] str = todayDataBean.getDate().split("：");
         String temp = str[1].replace(")", "");
         binding.fragTvCurrentTemp.setText(temp);
-        // 获取未来三天天气，加载到 layout 中
-        List<WeatherBean.ResultsBean.WeatherDataBean> futureList = resultsBean.getWeather_data();
-        futureList.remove(0);
-        for (int i = 0; i < futureList.size(); i++) {
-            View centerView = LayoutInflater.from(getActivity()).inflate(R.layout.main_center, null);
-            centerView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            binding.fragLayoutCenter.addView(centerView);
-            TextView centerDataTv = centerView.findViewById(R.id.center_tv_date);
-            TextView centerTempRangeTv = centerView.findViewById(R.id.center_tv_temp_range);
-            TextView centerWeatherTv = centerView.findViewById(R.id.center_tv_weather);
-            ImageView centerIv = centerView.findViewById(R.id.center_iv);
-            // 获取对应信息
-            WeatherBean.ResultsBean.WeatherDataBean dataBean = futureList.get(i);
-            centerDataTv.setText(dataBean.getDate());
-            centerTempRangeTv.setText(dataBean.getTemperature());
-            centerWeatherTv.setText(dataBean.getWeather());
-            Picasso.with(getActivity()).load(dataBean.getDayPictureUrl()).into(centerIv);
-        }
+        // 设置未来三天的天气信息
+        binding.centerTvDate1.setText(resultsBean.getWeather_data().get(1).getDate());
+        binding.centerTvDate2.setText(resultsBean.getWeather_data().get(2).getDate());
+        binding.centerTvDate3.setText(resultsBean.getWeather_data().get(3).getDate());
+        binding.centerTvTempRange1.setText(resultsBean.getWeather_data().get(1).getTemperature());
+        binding.centerTvTempRange2.setText(resultsBean.getWeather_data().get(2).getTemperature());
+        binding.centerTvTempRange3.setText(resultsBean.getWeather_data().get(3).getTemperature());
+        binding.centerTvWeather1.setText(resultsBean.getWeather_data().get(1).getWeather());
+        binding.centerTvWeather2.setText(resultsBean.getWeather_data().get(2).getWeather());
+        binding.centerTvWeather3.setText(resultsBean.getWeather_data().get(3).getWeather());
+        Picasso.with(getActivity()).load(resultsBean.getWeather_data().get(1).getDayPictureUrl()).into(binding.centerIv1);
+        Picasso.with(getActivity()).load(resultsBean.getWeather_data().get(2).getDayPictureUrl()).into(binding.centerIv2);
+        Picasso.with(getActivity()).load(resultsBean.getWeather_data().get(3).getDayPictureUrl()).into(binding.centerIv3);
     }
 
     @Override

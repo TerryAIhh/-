@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         initPoints();
         // 默认加载最后的一个城市
         binding.mainVp.setCurrentItem(fragmentList.size() - 1);
+        supportActionBar.setTitle(cityList.get(cityList.size() - 1));
         // 设置滑动页面监听器
         setPagerListener();
     }

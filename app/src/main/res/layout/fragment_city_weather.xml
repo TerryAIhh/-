@@ -31,7 +31,7 @@
                 android:layout_marginTop="60dp"
                 android:text="3℃"
                 android:textColor="@color/textWhite"
-                android:textSize="66sp"
+                android:textSize="74sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -79,23 +79,145 @@
             android:id="@+id/frag_layout_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/frag_bg"
             android:orientation="vertical"
-            android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/frag_layout_index"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/center_tv_date1"
+                    style="@style/FutureThreeDaysText"
+                    android:text="周五" />
+
+                <TextView
+                    android:id="@+id/center_tv_weather1"
+                    style="@style/FutureThreeDaysText"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/center_tv_date1"
+                    android:text="晴" />
+
+                <TextView
+                    android:id="@+id/center_tv_temp_range1"
+                    style="@style/FutureThreeDaysText"
+                    android:layout_alignParentRight="true"
+                    android:text="16~22℃" />
+
+                <ImageView
+                    android:id="@+id/center_iv1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignBottom="@+id/center_tv_date1"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/center_tv_temp_range1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_sun" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/text" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/center_tv_date2"
+                    style="@style/FutureThreeDaysText"
+                    android:text="周五" />
+
+                <TextView
+                    android:id="@+id/center_tv_weather2"
+                    style="@style/FutureThreeDaysText"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/center_tv_date2"
+                    android:text="晴" />
+
+                <TextView
+                    android:id="@+id/center_tv_temp_range2"
+                    style="@style/FutureThreeDaysText"
+                    android:layout_alignParentRight="true"
+                    android:text="16~22℃" />
+
+                <ImageView
+                    android:id="@+id/center_iv2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignBottom="@+id/center_tv_date2"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/center_tv_temp_range2"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_sun" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/text" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/center_tv_date3"
+                    style="@style/FutureThreeDaysText"
+                    android:text="周五" />
+
+                <TextView
+                    android:id="@+id/center_tv_weather3"
+                    style="@style/FutureThreeDaysText"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/center_tv_date3"
+                    android:text="晴" />
+
+                <TextView
+                    android:id="@+id/center_tv_temp_range3"
+                    style="@style/FutureThreeDaysText"
+                    android:layout_alignParentRight="true"
+                    android:text="16~22℃" />
+
+                <ImageView
+                    android:id="@+id/center_iv3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignBottom="@+id/center_tv_date3"
+                    android:layout_marginRight="20dp"
+                    android:layout_toLeftOf="@+id/center_tv_temp_range3"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_sun" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/text"
+            app:layout_constraintBottom_toTopOf="@+id/frag_layout_index"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_layout_center" />
 
         <LinearLayout
             android:id="@+id/frag_layout_index"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/frag_bg"
             android:orientation="vertical"
-            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
