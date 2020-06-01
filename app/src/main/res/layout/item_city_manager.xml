@@ -1,81 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/item_city_cv"
+    <data>
+
+        <variable
+            name="data"
+            type="com.cjlu.tyweather.bean.WeatherBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:background="@color/card_bg"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="0dp"
-        app:cardMaxElevation="0dp"
-        app:contentPadding="3dp">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item_city_cv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:layout_margin="3dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
+            app:contentPadding="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/item_city_tv_city"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="温州"
-                android:textColor="@color/textWhite"
-                android:textSize="22sp" />
-
-            <TextView
-                android:id="@+id/item_city_tv_temp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="24℃"
-                android:textColor="@color/textWhite"
-                android:textSize="30sp" />
-
-            <TextView
-                android:id="@+id/fu_zhu_line"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_below="@id/item_city_tv_temp" />
-
-            <TextView
-                android:id="@+id/item_city_tv_weather"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fu_zhu_line"
-                android:layout_marginTop="5dp"
-                android:text="晴"
-                android:textColor="@color/textWhite"
-                android:textSize="12sp" />
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/item_city_tv_wind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/fu_zhu_line"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
-                android:text="西北风"
-                android:textColor="@color/textWhite"
-                android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/item_city_tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{data.results[0].currentCity}"
+                    android:textColor="@color/textWhite"
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/item_city_tv_range"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/fu_zhu_line"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="5dp"
-                android:text="21~9℃"
-                android:textColor="@color/textWhite"
-                android:textSize="12sp" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+                <TextView
+                    android:id="@+id/item_city_tv_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="24℃"
+                    android:textColor="@color/textWhite"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/fu_zhu_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_below="@id/item_city_tv_temp" />
+
+                <TextView
+                    android:id="@+id/item_city_tv_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fu_zhu_line"
+                    android:layout_marginTop="5dp"
+                    android:text="@{data.results[0].weather_data[0].weather}"
+                    android:textColor="@color/textWhite"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/item_city_tv_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fu_zhu_line"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="5dp"
+                    android:text="@{data.results[0].weather_data[0].wind}"
+                    android:textColor="@color/textWhite"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/item_city_tv_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fu_zhu_line"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:text="@{data.results[0].weather_data[0].temperature}"
+                    android:textColor="@color/textWhite"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

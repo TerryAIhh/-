@@ -1,37 +1,43 @@
 package com.cjlu.tyweather.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cjlu.tyweather.R;
 import com.cjlu.tyweather.bean.WeatherBean;
+import com.cjlu.tyweather.databinding.ItemCityManagerBinding;
 import com.cjlu.tyweather.db.DatabaseBean;
 import com.google.gson.Gson;
 
 import java.util.List;
 
-public class CityManagerAdapter extends BaseAdapter {
+public class CityManagerAdapter extends RecyclerView.Adapter<CityManagerAdapter.ViewHolder> {
+    private List<DatabaseBean> mDatas;
 
-    Context context;
-    List<DatabaseBean> mDatas;
-
-    public CityManagerAdapter(Context context, List<DatabaseBean> mDatas) {
-        this.context = context;
+    public CityManagerAdapter(List<DatabaseBean> mDatas) {
         this.mDatas = mDatas;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return mDatas.size();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemCityManagerBinding itemCityManagerBinding = DataBindingUtil
+                .inflate(LayoutInflater.from(parent.getContext()), R.layout.item_city_manager, parent, false);
+        return new ViewHolder(itemCityManagerBinding);
     }
 
     @Override
-    public Object getItem(int position) {
-        return mDatas.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        DatabaseBean data = mDatas.get(position);
+        WeatherBean weatherBean = new Gson().fromJson(data.getContent(), WeatherBean.class);
+        holder.binding.setData(weatherBean);
+        String[] str = weatherBean.getResults().get(0).getWeather_data().get(0).getDate().split("：");
+        String temp = str[1].replace(")", "");
+        holder.binding.itemCityTvTemp.setText(temp);
     }
 
     @Override
@@ -40,38 +46,16 @@ public class CityManagerAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_city_manager, null);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        DatabaseBean bean = mDatas.get(position);
-        holder.cityTv.setText(bean.getCity());
-        WeatherBean weatherBean = new Gson().fromJson(bean.getContent(), WeatherBean.class);
-        // 获取今日的天气
-        WeatherBean.ResultsBean.WeatherDataBean dataBean = weatherBean.getResults().get(0).getWeather_data().get(0);
-        holder.weatherTv.setText(dataBean.getWeather());
-        String[] str = dataBean.getDate().split("：");
-        String temp = str[1].replace(")", "");
-        holder.tempTv.setText(temp);
-        holder.windTv.setText(dataBean.getWind());
-        holder.rangeTv.setText(dataBean.getTemperature());
-        return convertView;
+    public int getItemCount() {
+        return mDatas.size();
     }
 
-    class ViewHolder {
-        TextView cityTv, weatherTv, tempTv, rangeTv, windTv;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private ItemCityManagerBinding binding;
 
-        public ViewHolder(View itemView) {
-            cityTv = itemView.findViewById(R.id.item_city_tv_city);
-            weatherTv = itemView.findViewById(R.id.item_city_tv_weather);
-            tempTv = itemView.findViewById(R.id.item_city_tv_temp);
-            rangeTv = itemView.findViewById(R.id.item_city_tv_range);
-            windTv = itemView.findViewById(R.id.item_city_tv_wind);
+        public ViewHolder(ItemCityManagerBinding itemCityManagerBinding) {
+            super(itemCityManagerBinding.getRoot());
+            this.binding = itemCityManagerBinding;
         }
     }
 }

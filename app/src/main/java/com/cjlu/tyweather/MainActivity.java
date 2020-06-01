@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // 数据的初始化
         fragmentList = new ArrayList<>();
         cityList = DbManager.queryAllCityName();
+
         pointList = new ArrayList<>();
         // 暂未添加任何城市，默认北京
         if (cityList.size() == 0) {

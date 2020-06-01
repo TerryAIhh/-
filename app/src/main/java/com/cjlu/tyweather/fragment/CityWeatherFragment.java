@@ -3,7 +3,7 @@ package com.cjlu.tyweather.fragment;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.cjlu.tyweather.R;
-import com.cjlu.tyweather.base.BaseFragment;
+import com.cjlu.tyweather.WeatherViewModel;
 import com.cjlu.tyweather.bean.WeatherBean;
 import com.cjlu.tyweather.databinding.FragmentCityWeatherBinding;
-import com.cjlu.tyweather.db.DbManager;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,55 +28,34 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CityWeatherFragment extends BaseFragment implements View.OnClickListener {
+public class CityWeatherFragment extends Fragment implements View.OnClickListener {
     private FragmentCityWeatherBinding binding;
-    String url1 = "http://api.map.baidu.com/telematics/v3/weather?location=";
-    String url2 = "&output=json&ak=FkPhtMBK0HTIQNh7gG4cNUttSTyr0nzo";
     private List<WeatherBean.ResultsBean.IndexBean> indexList;
-    String city;
+    private String city;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_city_weather, container, false);
+        WeatherViewModel viewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
+        // 可以通过 activity 传值获取到当前 fragment 城市
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            city = bundle.getString("city");
+        }
+        viewModel.getWeather(city).observe(getViewLifecycleOwner(), CityWeatherFragment.this::showData);
+        changeBg();
         // 设置点击事件监听
         binding.fragTvDressIndex.setOnClickListener(this);
         binding.fragTvCarIndex.setOnClickListener(this);
         binding.fragTvColdIndex.setOnClickListener(this);
         binding.fragTvSportIndex.setOnClickListener(this);
         binding.fragTvRaysIndex.setOnClickListener(this);
-        changeBg();
-        // 可以通过 activity 传值获取到当前 fragment 城市
-        Bundle bundle = getArguments();
-        city = bundle.getString("city");
-        String url = url1 + city + url2;
-        // 调用 BaseFragment 获取数据方法
-        loadData(url);
         return binding.getRoot();
     }
 
-    @Override
-    public void onSuccess(String result) {
-        // 解析并展示数据
-        showData(result);
-        // 更新数据
-        int i = DbManager.updateInfoByCity(city, result);
-        if (i <= 0) {
-            // 更新失败，没有这条记录，则增加城市记录
-            DbManager.addCityInfo(city, result);
-        }
-    }
-
-    @Override
-    public void onError(Throwable ex, boolean isOnCallback) {
-        String lastResult = DbManager.queryInfoByCity(city);
-        if (!TextUtils.isEmpty(lastResult)) {
-            showData(lastResult);
-        }
-    }
-
     // 更新背景图
-    public void changeBg() {
+    private void changeBg() {
         SharedPreferences bg_pref = getActivity().getSharedPreferences("bg_pref", MODE_PRIVATE);
         int bg_num = bg_pref.getInt("bg", 2);
         switch (bg_num) {
@@ -93,8 +72,7 @@ public class CityWeatherFragment extends BaseFragment implements View.OnClickLis
     }
 
     @SuppressLint("InflateParams")
-    private void showData(String result) {
-        WeatherBean weatherBean = new Gson().fromJson(result, WeatherBean.class);
+    private void showData(WeatherBean weatherBean) {
         WeatherBean.ResultsBean resultsBean = weatherBean.getResults().get(0);
         // 获取指数信息集合列表
         indexList = resultsBean.getIndex();

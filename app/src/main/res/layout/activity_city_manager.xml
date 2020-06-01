@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_bg"
-    tools:context=".acticitiy.CityManagerActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.baoyz.swipemenulistview.SwipeMenuListView
-        android:id="@+id/city_lv"
+    <data>
+
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null" />
-
-
-</RelativeLayout>
+        android:background="@color/gray_bg"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:context=".acticitiy.CityManagerActivity"
+        tools:listitem="@layout/item_city_manager" />
+</layout>
