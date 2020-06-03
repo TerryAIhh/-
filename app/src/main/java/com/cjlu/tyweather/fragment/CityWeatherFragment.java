@@ -3,7 +3,6 @@ package com.cjlu.tyweather.fragment;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cjlu.tyweather.R;
@@ -60,13 +58,13 @@ public class CityWeatherFragment extends Fragment implements View.OnClickListene
         int bg_num = bg_pref.getInt("bg", 2);
         switch (bg_num) {
             case 0:
-                binding.fragLayout.setBackgroundResource(R.color.colorAccent);
+                binding.fragLayout.setBackgroundResource(R.color.purple);
                 break;
             case 1:
-                binding.fragLayout.setBackgroundResource(R.color.pink);
+                binding.fragLayout.setBackgroundResource(R.color.card_bg);
                 break;
             case 2:
-                binding.fragLayout.setBackgroundResource(R.color.gray_bg);
+                binding.fragLayout.setBackgroundResource(R.color.pink);
                 break;
         }
     }
@@ -83,7 +81,7 @@ public class CityWeatherFragment extends Fragment implements View.OnClickListene
         binding.fragTvWeather.setText(todayDataBean.getWeather());
         // 处理字符串  周四 04月23日 (实时：15℃)
         String[] str = todayDataBean.getDate().split("：");
-        String temp = str[1].replace(")", "");
+        String temp = str[1].replace("℃)", "");
         binding.fragTvCurrentTemp.setText(temp);
         // 设置未来三天的天气信息
         binding.centerTvDate1.setText(resultsBean.getWeather_data().get(1).getDate());

@@ -11,7 +11,6 @@
         android:id="@+id/recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_bg"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context=".acticitiy.CityManagerActivity"
         tools:listitem="@layout/item_city_manager" />

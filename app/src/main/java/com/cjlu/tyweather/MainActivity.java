@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -102,13 +101,13 @@ public class MainActivity extends AppCompatActivity {
         int bg_num = bg_pref.getInt("bg", 2);
         switch (bg_num) {
             case 0:
-                binding.mainLayout.setBackgroundResource(R.color.colorAccent);
+                binding.mainLayout.setBackgroundResource(R.color.purple);
                 break;
             case 1:
-                binding.mainLayout.setBackgroundResource(R.color.pink);
+                binding.mainLayout.setBackgroundResource(R.color.card_bg);
                 break;
             case 2:
-                binding.mainLayout.setBackgroundResource(R.color.gray_bg);
+                binding.mainLayout.setBackgroundResource(R.color.pink);
                 break;
         }
     }
@@ -126,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 supportActionBar.setTitle(cityList.get(position));
                 for (int i = 0; i < pointList.size(); i++) {
-                    pointList.get(i).setImageResource(R.drawable.ic_small_white);
+                    pointList.get(i).setImageResource(R.drawable.ic_small_gray);
                 }
-                pointList.get(position).setImageResource(R.drawable.ic_small_gray);
+                pointList.get(position).setImageResource(R.drawable.ic_small_white);
             }
 
             @Override
@@ -143,14 +142,14 @@ public class MainActivity extends AppCompatActivity {
     private void initPoints() {
         for (int i = 0; i < fragmentList.size(); i++) {
             ImageView pointIv = new ImageView(this);
-            pointIv.setImageResource(R.drawable.ic_small_white);
+            pointIv.setImageResource(R.drawable.ic_small_gray);
             pointIv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) pointIv.getLayoutParams();
             lp.setMargins(0, 0, 20, 0);
             pointList.add(pointIv);
             binding.mainLayoutPoint.addView(pointIv);
         }
-        pointList.get(pointList.size() - 1).setImageResource(R.drawable.ic_small_gray);
+        pointList.get(pointList.size() - 1).setImageResource(R.drawable.ic_small_white);
     }
 
     private void initViewPager() {

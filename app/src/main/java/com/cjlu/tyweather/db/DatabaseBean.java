@@ -37,4 +37,13 @@ public class DatabaseBean {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "DatabaseBean{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package com.cjlu.tyweather.adapter;
 
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cjlu.tyweather.R;
+import com.cjlu.tyweather.acticitiy.CityManagerActivity;
 import com.cjlu.tyweather.bean.WeatherBean;
 import com.cjlu.tyweather.databinding.ItemCityManagerBinding;
 import com.cjlu.tyweather.db.DatabaseBean;
@@ -15,11 +17,15 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-public class CityManagerAdapter extends RecyclerView.Adapter<CityManagerAdapter.ViewHolder> {
-    private List<DatabaseBean> mDatas;
+import static com.cjlu.tyweather.db.DbManager.deleteCityInfo;
 
-    public CityManagerAdapter(List<DatabaseBean> mDatas) {
+public class CityManagerAdapter extends RecyclerView.Adapter<CityManagerAdapter.ViewHolder> implements ItemTouchHelperAdapter {
+    private List<DatabaseBean> mDatas;
+    private CityManagerActivity activity;
+
+    public CityManagerAdapter(List<DatabaseBean> mDatas, CityManagerActivity activity) {
         this.mDatas = mDatas;
+        this.activity = activity;
     }
 
     @NonNull
@@ -48,6 +54,27 @@ public class CityManagerAdapter extends RecyclerView.Adapter<CityManagerAdapter.
     @Override
     public int getItemCount() {
         return mDatas.size();
+    }
+
+    @Override
+    public void onItemDelete(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("提示").setMessage("是否移除该城市？").setPositiveButton("确定", (dialog, which) -> {
+            //移除数据
+            DatabaseBean data = mDatas.get(position);
+            WeatherBean weather = new Gson().fromJson(data.getContent(), WeatherBean.class);
+            int res = deleteCityInfo(weather.getResults().get(0).getCurrentCity());
+            if (res == 1) {
+                mDatas.remove(position);
+                notifyItemRemoved(position);
+            } else {
+                notifyDataSetChanged();
+            }
+
+        }).setNegativeButton("取消", (dialog, which) -> {
+            notifyDataSetChanged();
+        });
+        builder.create().show();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

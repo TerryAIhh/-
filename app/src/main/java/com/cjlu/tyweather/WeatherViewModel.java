@@ -41,11 +41,13 @@ public class WeatherViewModel extends AndroidViewModel {
             public void onSuccess(String result) {
                 WeatherBean weatherBean = new Gson().fromJson(result, WeatherBean.class);
                 weather.setValue(weatherBean);
-                // 更新数据库
-                int i = DbManager.updateInfoByCity(city, result);
-                if (i <= 0) {
-                    // 更新失败，没有这条记录，则增加城市记录
-                    DbManager.addCityInfo(city, result);
+                if (weatherBean.getError() == 0) {
+                    // 更新数据库
+                    int i = DbManager.updateInfoByCity(city, result);
+                    if (i <= 0) {
+                        // 更新失败，没有这条记录，则增加城市记录
+                        DbManager.addCityInfo(city, result);
+                    }
                 }
             }
 

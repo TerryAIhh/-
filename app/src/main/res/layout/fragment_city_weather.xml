@@ -11,7 +11,7 @@
         android:id="@+id/frag_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_bg"
+        android:background="@color/white"
         tools:context=".fragment.CityWeatherFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,8 +31,9 @@
                 android:layout_marginTop="60dp"
                 android:text="3℃"
                 android:textColor="@color/textWhite"
-                android:textSize="74sp"
+                android:textSize="88sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.45"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,14 +74,25 @@
                 app:layout_constraintStart_toStartOf="@+id/frag_tv_wind"
                 app:layout_constraintTop_toBottomOf="@+id/frag_tv_wind" />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="℃"
+                android:textColor="@color/textWhite"
+                android:textSize="40sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/frag_tv_current_temp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/frag_tv_current_temp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/frag_layout_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="16dp"
+            android:layout_margin="20dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/frag_layout_index"
             app:layout_constraintEnd_toEndOf="parent"
@@ -121,11 +133,6 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/text" />
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -161,11 +168,6 @@
                     android:src="@drawable/ic_sun" />
 
             </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/text" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -205,8 +207,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/text"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/frag_layout_index"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -230,20 +231,20 @@
                 <TextView
                     android:id="@+id/frag_tv_dress_index"
                     style="@style/IndexText"
-                    android:drawableBottom="@drawable/ic_dress"
+                    android:drawableTop="@drawable/ic_dress"
                     android:text="穿衣指数" />
 
                 <TextView
                     android:id="@+id/frag_tv_car_index"
                     style="@style/IndexText"
-                    android:drawableBottom="@drawable/ic_car"
+                    android:drawableTop="@drawable/ic_car"
                     android:text="洗车指数" />
 
 
                 <TextView
                     android:id="@+id/frag_tv_cold_index"
                     style="@style/IndexText"
-                    android:drawableBottom="@drawable/ic_cold"
+                    android:drawableTop="@drawable/ic_cold"
                     android:text="感冒指数" />
             </LinearLayout>
 
@@ -261,14 +262,14 @@
                 <TextView
                     android:id="@+id/frag_tv_sport_index"
                     style="@style/IndexText"
-                    android:drawableBottom="@drawable/ic_sport"
+                    android:drawableTop="@drawable/ic_sport"
                     android:text="运动指数" />
 
 
                 <TextView
                     android:id="@+id/frag_tv_rays_index"
                     style="@style/IndexText"
-                    android:drawableBottom="@drawable/ic_rays"
+                    android:drawableTop="@drawable/ic_rays"
                     android:text="紫外线指数" />
 
 

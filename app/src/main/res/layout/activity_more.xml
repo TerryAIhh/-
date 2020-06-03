@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -24,36 +25,40 @@
             android:text="更改背景图"
             android:textColor="@color/black"
             android:textSize="16sp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="88dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/more_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/more_tv_change_bg">
 
             <RadioButton
                 android:id="@+id/more_rb_green"
                 style="@style/RadioButtonOfBg"
-                android:background="@color/colorAccent"
-                android:text="护眼绿"
-                android:textColor="@color/black" />
+                android:background="@color/purple"
+                android:text="熏衣紫"
+                android:textColor="@color/white" />
 
             <RadioButton
                 android:id="@+id/more_rb_pink"
                 style="@style/RadioButtonOfBg"
-                android:background="@color/pink"
-                android:text="少女粉"
-                android:textColor="@color/black" />
+                android:background="@color/card_bg"
+                android:text="雾霾蓝"
+                android:textColor="@color/white" />
 
             <RadioButton
                 android:id="@+id/more_rb_gray"
                 style="@style/RadioButtonOfBg"
-                android:background="@color/gray_bg"
-                android:text="高贵灰"
-                android:textColor="@color/black" />
+                android:background="@color/pink"
+                android:text="少女粉"
+                android:textColor="@color/white" />
 
 
         </RadioGroup>
@@ -69,8 +74,9 @@
             android:text="当前版本"
             android:textColor="@color/black"
             android:textSize="16sp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="157dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/more_rg" />
 
         <TextView
             android:id="@+id/more_tv_clear_cache"
@@ -83,8 +89,9 @@
             android:text="清除缓存"
             android:textColor="@color/black"
             android:textSize="16sp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="217dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/more_tv_version" />
 
         <TextView
             android:id="@+id/more_tv_share"
@@ -97,7 +104,8 @@
             android:text="分享软件"
             android:textColor="@color/black"
             android:textSize="16sp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="330dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/more_tv_clear_cache" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

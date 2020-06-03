@@ -2,6 +2,7 @@ package com.cjlu.tyweather.acticitiy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -10,19 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 
 import com.cjlu.tyweather.R;
 import com.cjlu.tyweather.adapter.CityManagerAdapter;
 import com.cjlu.tyweather.databinding.ActivityCityManagerBinding;
 import com.cjlu.tyweather.db.DatabaseBean;
 import com.cjlu.tyweather.db.DbManager;
+import com.cjlu.tyweather.myItemTouchHelperCallBack;
 
 import java.util.List;
 
 public class CityManagerActivity extends AppCompatActivity {
     ActivityCityManagerBinding binding;
     List<DatabaseBean> mDatas;
-    private CityManagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,11 @@ public class CityManagerActivity extends AppCompatActivity {
         }
         mDatas = DbManager.queryAllInfo();
         // 设置适配器
-        adapter = new CityManagerAdapter(mDatas);
+        CityManagerAdapter adapter = new CityManagerAdapter(mDatas, this);
         binding.recycle.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new myItemTouchHelperCallBack(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(binding.recycle);
     }
 
     @Override

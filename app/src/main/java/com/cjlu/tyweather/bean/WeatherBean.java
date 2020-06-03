@@ -137,6 +137,16 @@ public class WeatherBean {
             public void setZs(String zs) {
                 this.zs = zs;
             }
+
+            @Override
+            public String toString() {
+                return "IndexBean{" +
+                        "des='" + des + '\'' +
+                        ", tipt='" + tipt + '\'' +
+                        ", title='" + title + '\'' +
+                        ", zs='" + zs + '\'' +
+                        '}';
+            }
         }
 
         public static class WeatherDataBean {
@@ -203,6 +213,38 @@ public class WeatherBean {
             public void setTemperature(String temperature) {
                 this.temperature = temperature;
             }
+
+            @Override
+            public String toString() {
+                return "WeatherDataBean{" +
+                        "date='" + date + '\'' +
+                        ", dayPictureUrl='" + dayPictureUrl + '\'' +
+                        ", nightPictureUrl='" + nightPictureUrl + '\'' +
+                        ", weather='" + weather + '\'' +
+                        ", wind='" + wind + '\'' +
+                        ", temperature='" + temperature + '\'' +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "ResultsBean{" +
+                    "currentCity='" + currentCity + '\'' +
+                    ", pm25='" + pm25 + '\'' +
+                    ", index=" + index +
+                    ", weather_data=" + weather_data +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherBean{" +
+                "error=" + error +
+                ", status='" + status + '\'' +
+                ", date='" + date + '\'' +
+                ", results=" + results +
+                '}';
     }
 }
